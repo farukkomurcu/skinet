@@ -3,8 +3,9 @@ export interface IProduct{
     name: string;
     description: string;
     price: number;
-    picturerl: string;
+    pictureUrl: string;
     productType:string;
     productBrand: string;
+    
 }
 
