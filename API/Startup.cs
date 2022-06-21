@@ -27,11 +27,11 @@ namespace API
             services.AddDbContext<StoreContext>(x => 
                 x.UseSqlite(_config.GetConnectionString("DefaultConnection")));
 
-                     services.AddSingleton<IConnectionMultiplexer>(c =>
-            {
+            services.AddSingleton<IConnectionMultiplexer>(c => {
                 var configuration = ConfigurationOptions.Parse(_config.GetConnectionString("Redis"), true);
-                return (IConnectionMultiplexer)ConnectionMultiplexer.Connect(configuration);
-            });
+                return ConnectionMultiplexer.Connect(configuration);
+                
+            }); 
 
             services.AddApplicationServices();
             services.AddSwaggerDocumentation();
@@ -73,11 +73,5 @@ namespace API
         }
     }
 
-    internal class ConfigurationOptions
-    {
-        internal static object Parse(string v1, bool v2)
-        {
-            throw new NotImplementedException();
-        }
-    }
+    
 }
