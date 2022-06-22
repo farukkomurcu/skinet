@@ -13,14 +13,10 @@ namespace Infrastructure.Data
             _database=redis.GetDatabase();
         }
 
-        public async Task<bool> DeleteBaketAsync(string basketId)
+
+        public async Task<bool> DeleteBasketAsync(string basketId)
         {
             return await _database.KeyDeleteAsync(basketId);
-        }
-
-        public Task<bool> DeleteBasketAsync(string basketId)
-        {
-            throw new NotImplementedException();
         }
 
         public async Task<CustomerBasket> GetBasketAsync(string basketId)
@@ -33,6 +29,8 @@ namespace Infrastructure.Data
         public async Task<CustomerBasket> UpdateBasketAsync(CustomerBasket basket)
         {
             var created=await _database.StringSetAsync(basket.Id, JsonSerializer.Serialize(basket), TimeSpan.FromDays(30));
+
+            if (!created) return null;
             return await GetBasketAsync(basket.Id);
         }
     }
